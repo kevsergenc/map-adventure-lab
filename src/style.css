@@ -1,0 +1,778 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg-dark: #070913;
+  --panel-bg: rgba(15, 23, 42, 0.75);
+  --panel-border: rgba(255, 255, 255, 0.12);
+  --accent: #38bdf8;
+  --accent-glow: rgba(56, 189, 248, 0.4);
+  --accent-hover: #0284c7;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --success: #10b981;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+#canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: var(--panel-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* TOP HEADER */
+.top-header {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  right: 20px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 10;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  font-size: 24px;
+  animation: spin-slow 20s linear infinite;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.logo-title {
+  font-size: 17px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffffff, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.badge-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-main);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.badge-btn:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+/* CAMERA SWITCHER */
+.camera-switch {
+  display: flex;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  padding: 3px;
+  gap: 4px;
+}
+
+.cam-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 6px 12px;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cam-btn.active {
+  background: var(--accent);
+  color: #070913;
+  box-shadow: 0 2px 8px var(--accent-glow);
+}
+
+/* LEFT HUD: CURRENT LOCATION & T-SHIRT */
+.left-hud {
+  position: absolute;
+  top: 86px;
+  left: 20px;
+  width: 320px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.location-card {
+  padding: 18px;
+}
+
+.location-header {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.live-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--success);
+}
+
+.pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 10px var(--success);
+  animation: pulse-dot 1.5s infinite;
+}
+
+@keyframes pulse-dot {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+.country-display {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.country-flag-img {
+  width: 52px;
+  height: 36px;
+  border-radius: 6px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ocean-flag-icon {
+  width: 52px;
+  height: 36px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #1e3a8a, #0284c7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.country-details h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.country-details p {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.coords-box {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: monospace;
+}
+
+/* T-SHIRT LIVE SPOTLIGHT */
+.tshirt-spotlight-card {
+  padding: 16px;
+  text-align: center;
+}
+
+.tshirt-header {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.tshirt-preview-box {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tshirt-shape {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tshirt-shape:hover {
+  transform: scale(1.05);
+}
+
+#tshirt-canvas-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tshirt-caption {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+/* RIGHT SIDE COMPANION & DIRECTION DOCK */
+.dialog-dock {
+  position: absolute;
+  top: 86px;
+  right: 20px;
+  width: 350px;
+  max-height: calc(100vh - 106px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 10;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dialog-dock::-webkit-scrollbar {
+  width: 5px;
+}
+
+.dialog-dock::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.companion-bubble {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.avatar {
+  font-size: 28px;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+
+.speech-text {
+  flex: 1;
+}
+
+.speaker-name {
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.speech-message {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+/* CONTROLS AREA */
+.control-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 8px;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+  flex: 1;
+  text-align: center;
+}
+
+.tab-btn.active {
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--accent);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* COMPASS GRID - 3x3 ROSE LAYOUT */
+.compass-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.dir-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  padding: 8px 4px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  transition: all 0.2s;
+}
+
+.dir-btn:hover {
+  background: var(--accent);
+  color: #070913;
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.dir-icon {
+  font-size: 16px;
+}
+
+.compass-center {
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px dashed rgba(56, 189, 248, 0.4);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.compass-rose-icon {
+  font-size: 20px;
+  animation: pulse-compass 2s infinite ease-in-out;
+}
+
+@keyframes pulse-compass {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+/* DESTINATION TAB */
+.destination-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.search-box {
+  display: flex;
+  gap: 6px;
+}
+
+.search-input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: #ffffff;
+  font-size: 12px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  border-color: var(--accent);
+}
+
+.action-btn {
+  background: var(--accent);
+  color: #070913;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.action-btn:hover {
+  background: #7dd3fc;
+  box-shadow: 0 2px 10px var(--accent-glow);
+}
+
+.quick-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.chip-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  padding: 4px 8px;
+  border-radius: 14px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chip-btn:hover {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+/* ACTIONS BAR (STOP, SPEED, RANDOM) */
+.dock-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 12px;
+}
+
+.footer-row-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.secondary-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.footer-row-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.toggle-switch-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.footer-row-speed {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.speed-selector {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.speed-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.speed-btn.active {
+  background: var(--accent);
+  color: #070913;
+  font-weight: 700;
+}
+
+/* NOTIFICATION TOAST (CENTER-TOP) */
+#country-toast {
+  position: absolute;
+  top: 86px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-30px);
+  opacity: 0;
+  pointer-events: none;
+  padding: 10px 18px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#country-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.toast-flag {
+  font-size: 26px;
+}
+
+.toast-info h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.toast-info p {
+  font-size: 11px;
+  color: var(--accent);
+}
+
+/* PASSPORT MODAL */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.passport-card {
+  width: min(680px, 92vw);
+  max-height: 80vh;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: #ffffff;
+}
+
+.passport-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.passport-stamp {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.2s;
+}
+
+.passport-stamp:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+
+.stamp-flag {
+  width: 44px;
+  height: 30px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.stamp-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.stamp-date {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+/* HINT BOX (BOTTOM CENTER) */
+.controls-hint {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  padding: 8px 16px;
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.key-badge {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  color: #ffffff;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .left-hud {
+    width: calc(100vw - 40px);
+  }
+  .tshirt-spotlight-card {
+    display: none;
+  }
+  .dialog-dock {
+    width: calc(100vw - 40px);
+    right: 20px;
+    top: auto;
+    bottom: 20px;
+    max-height: 48vh;
+  }
+  .compass-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .controls-hint {
+    display: none;
+  }
+}
+
