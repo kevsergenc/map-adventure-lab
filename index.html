@@ -14,7 +14,7 @@
   <header class="top-header glass-panel">
     <div class="logo-area">
       <span class="logo-icon">🌍</span>
-      <span class="logo-title">Dünya Gezgini & Bayrak T-Shirt</span>
+      <span class="logo-title" id="txt-logo-title">Dünya Gezgini & Bayrak T-Shirt</span>
     </div>
 
     <div class="header-actions">
@@ -27,14 +27,21 @@
 
       <!-- Passport / Visited countries -->
       <button id="btn-passport" class="badge-btn">
-        <span>🛂 Pasaport</span>
+        <span id="txt-passport-btn">🛂 Pasaport</span>
         <span id="visited-counter" style="color: var(--accent); font-weight: 700;">1 / 177</span>
       </button>
 
       <!-- Sound Toggle -->
       <button id="btn-sound" class="badge-btn" title="Sesleri Aç / Kapat">
         <span id="sound-icon">🔊</span>
+        <span id="sound-text">Ses: Açık</span>
       </button>
+
+      <!-- Language Switcher (TR / EN) -->
+      <div class="lang-switch" id="lang-switch">
+        <button id="btn-lang-tr" class="lang-btn active" title="Türkçe">🇹🇷 TR</button>
+        <button id="btn-lang-en" class="lang-btn" title="English">🇬🇧 EN</button>
+      </div>
     </div>
   </header>
 
@@ -42,10 +49,10 @@
   <aside class="left-hud">
     <div class="location-card glass-panel">
       <div class="location-header">
-        <span>Mevcut Konum</span>
+        <span id="txt-loc-header">Mevcut Konum</span>
         <div class="live-indicator">
           <span class="pulse-dot"></span>
-          <span>CANLI</span>
+          <span id="txt-live-badge">CANLI</span>
         </div>
       </div>
 
@@ -55,19 +62,19 @@
         </div>
         <div class="country-details">
           <h2 id="country-name">Türkiye</h2>
-          <p id="country-info">Ankara • Avrupa / Asya</p>
+          <p id="country-info">Ankara • Asya / Avrupa</p>
         </div>
       </div>
 
       <div class="coords-box">
-        <span>ENLEM: <strong id="coord-lat">39.00° N</strong></span>
-        <span>BOYLAM: <strong id="coord-lon">35.00° E</strong></span>
+        <span><span id="txt-lat-label">ENLEM</span>: <strong id="coord-lat">39.00° K (N)</strong></span>
+        <span><span id="txt-lon-label">BOYLAM</span>: <strong id="coord-lon">35.00° D (E)</strong></span>
       </div>
     </div>
 
     <!-- T-Shirt Live Spotlight -->
     <div class="tshirt-spotlight-card glass-panel">
-      <div class="tshirt-header">T-Shirt Tasarımı</div>
+      <div class="tshirt-header" id="txt-tshirt-header">T-Shirt Tasarımı</div>
       <div class="tshirt-preview-box">
         <div class="tshirt-shape">
           <canvas id="tshirt-canvas-preview" width="256" height="256"></canvas>
@@ -84,7 +91,7 @@
     <div class="companion-bubble">
       <div class="avatar" id="avatar-icon">🧑‍🚀</div>
       <div class="speech-text">
-        <div class="speaker-name">Gezgin Karakter</div>
+        <div class="speaker-name" id="txt-speaker-name">Gezgin Karakter</div>
         <div class="speech-message" id="speech-msg">
           Merhaba! Şu an Türkiye topraklarındayım. 🇹🇷 T-shirt'üm Türkiye bayrağı oldu! Şimdi nereye gitmemi istersin?
         </div>
@@ -93,24 +100,24 @@
 
     <!-- Control Tabs -->
     <div class="control-tabs">
-      <button class="tab-btn active" data-tab="tab-compass">🧭 Yön Pusulası</button>
-      <button class="tab-btn" data-tab="tab-destination">✈️ Hedef Ülke Seç</button>
+      <button class="tab-btn active" data-tab="tab-compass" id="tab-btn-compass">🧭 Yön Pusulası</button>
+      <button class="tab-btn" data-tab="tab-destination" id="tab-btn-destination">✈️ Hedef Ülke Seç</button>
     </div>
 
     <!-- Compass Tab -->
     <div id="tab-compass" class="tab-content active">
       <div class="compass-grid">
-        <button class="dir-btn" data-dir="NW"><span class="dir-icon">↖️</span><span>KB</span></button>
-        <button class="dir-btn" data-dir="N"><span class="dir-icon">⬆️</span><span>Kuzey</span></button>
-        <button class="dir-btn" data-dir="NE"><span class="dir-icon">↗️</span><span>KD</span></button>
-        <button class="dir-btn" data-dir="W"><span class="dir-icon">⬅️</span><span>Batı</span></button>
+        <button class="dir-btn" data-dir="NW"><span class="dir-icon">↖️</span><span id="dir-txt-nw">KB</span></button>
+        <button class="dir-btn" data-dir="N"><span class="dir-icon">⬆️</span><span id="dir-txt-n">Kuzey</span></button>
+        <button class="dir-btn" data-dir="NE"><span class="dir-icon">↗️</span><span id="dir-txt-ne">KD</span></button>
+        <button class="dir-btn" data-dir="W"><span class="dir-icon">⬅️</span><span id="dir-txt-w">Batı</span></button>
         <div class="compass-center" title="Pusula Merkezi">
           <span class="compass-rose-icon">🧭</span>
         </div>
-        <button class="dir-btn" data-dir="E"><span class="dir-icon">➡️</span><span>Doğu</span></button>
-        <button class="dir-btn" data-dir="SW"><span class="dir-icon">↙️</span><span>GB</span></button>
-        <button class="dir-btn" data-dir="S"><span class="dir-icon">⬇️</span><span>Güney</span></button>
-        <button class="dir-btn" data-dir="SE"><span class="dir-icon">↘️</span><span>GD</span></button>
+        <button class="dir-btn" data-dir="E"><span class="dir-icon">➡️</span><span id="dir-txt-e">Doğu</span></button>
+        <button class="dir-btn" data-dir="SW"><span class="dir-icon">↙️</span><span id="dir-txt-sw">GB</span></button>
+        <button class="dir-btn" data-dir="S"><span class="dir-icon">⬇️</span><span id="dir-txt-s">Güney</span></button>
+        <button class="dir-btn" data-dir="SE"><span class="dir-icon">↘️</span><span id="dir-txt-se">GD</span></button>
       </div>
     </div>
 
@@ -123,15 +130,15 @@
           <button id="btn-go-dest" class="action-btn">Git 🚀</button>
         </div>
         <div class="quick-chips">
-          <span style="font-size: 11px; color: var(--text-muted); align-self: center; width: 100%;">Popüler Rotalar:</span>
-          <button class="chip-btn" data-country="Japonya">🇯🇵 Japonya</button>
-          <button class="chip-btn" data-country="Brezilya">🇧🇷 Brezilya</button>
-          <button class="chip-btn" data-country="Mısır">🇪🇬 Mısır</button>
-          <button class="chip-btn" data-country="Fransa">🇫🇷 Fransa</button>
-          <button class="chip-btn" data-country="Amerika Birleşik Devletleri">🇺🇸 ABD</button>
-          <button class="chip-btn" data-country="Avustralya">🇦🇺 Avustralya</button>
-          <button class="chip-btn" data-country="Güney Afrika">🇿🇦 G. Afrika</button>
-          <button class="chip-btn" data-country="İtalya">🇮🇹 İtalya</button>
+          <span id="txt-popular-routes" style="font-size: 11px; color: var(--text-muted); align-self: center; width: 100%;">Popüler Rotalar:</span>
+          <button class="chip-btn" data-id="jp">🇯🇵 <span class="chip-name">Japonya</span></button>
+          <button class="chip-btn" data-id="br">🇧🇷 <span class="chip-name">Brezilya</span></button>
+          <button class="chip-btn" data-id="eg">🇪🇬 <span class="chip-name">Mısır</span></button>
+          <button class="chip-btn" data-id="fr">🇫🇷 <span class="chip-name">Fransa</span></button>
+          <button class="chip-btn" data-id="us">🇺🇸 <span class="chip-name">ABD</span></button>
+          <button class="chip-btn" data-id="au">🇦🇺 <span class="chip-name">Avustralya</span></button>
+          <button class="chip-btn" data-id="za">🇿🇦 <span class="chip-name">G. Afrika</span></button>
+          <button class="chip-btn" data-id="it">🇮🇹 <span class="chip-name">İtalya</span></button>
         </div>
       </div>
     </div>
@@ -146,12 +153,12 @@
       <div class="footer-row-toggle">
         <label class="toggle-switch-label">
           <input type="checkbox" id="check-ask-border" checked>
-          <span>Yeni sınırda bana sor</span>
+          <span id="txt-ask-border">Yeni sınırda bana sor</span>
         </label>
       </div>
 
       <div class="footer-row-speed">
-        <span style="color: var(--text-muted); font-size: 12px;">Hız:</span>
+        <span id="txt-speed-label" style="color: var(--text-muted); font-size: 12px;">Hız:</span>
         <div class="speed-selector">
           <button class="speed-btn active" data-speed="1">1x</button>
           <button class="speed-btn" data-speed="2.5">2.5x</button>
@@ -166,18 +173,27 @@
     <div class="toast-flag" id="toast-flag">🇹🇷</div>
     <div class="toast-info">
       <h4 id="toast-title">Yeni Ülkeye Adım Atıldı!</h4>
-      <p id="toast-desc">T-shirt güncellendi</p>
+      <p id="toast-desc">T-shirt bayrak deseni güncellendi</p>
     </div>
   </div>
 
-  <!-- KEYBOARD HINT -->
+  <!-- GLOBE HOVER TOOLTIP (VISUAL ONLY) -->
+  <div id="globe-hover-tooltip" class="globe-tooltip">
+    <img id="tooltip-flag" class="globe-tooltip-flag" src="" alt="Bayrak">
+    <div class="globe-tooltip-texts">
+      <div class="globe-tooltip-en" id="tooltip-name">Ülke</div>
+      <div class="globe-tooltip-tr" id="tooltip-sub">Bölge</div>
+    </div>
+  </div>
+
+  <!-- KEYBOARD & CONTROLS HINT -->
   <div class="controls-hint glass-panel">
-    <span>Klavye:</span>
+    <span class="hint-icon">🎮</span>
+    <span id="txt-controls-hint">Farenizle tıklayarak veya yön tuşlarıyla yürütün • Farenizle küreyi döndürebilirsiniz</span>
     <span class="key-badge">W</span>
     <span class="key-badge">A</span>
     <span class="key-badge">S</span>
     <span class="key-badge">D</span>
-    <span>veya Yön Tuşları ile yürütün • Farenizle küreyi döndürebilirsiniz</span>
   </div>
 
   <!-- PASSPORT MODAL -->
@@ -186,11 +202,11 @@
       <div class="modal-header">
         <div style="display: flex; align-items: center; gap: 8px;">
           <span style="font-size: 22px;">🛂</span>
-          <h3 style="font-size: 18px;">Gezgin Pasaportu & Damgalar</h3>
+          <h3 style="font-size: 18px;" id="txt-passport-modal-title">Gezgin Pasaportu & Damgalar</h3>
         </div>
         <button id="btn-close-passport" class="modal-close">&times;</button>
       </div>
-      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;" id="txt-passport-modal-desc">
         Ziyaret ettiğiniz tüm ülkelerin t-shirt tasarımları ve pasaport vizeleri burada toplanır:
       </p>
       <div id="passport-grid" class="passport-grid">
@@ -202,4 +218,3 @@
   <script type="module" src="./src/main.js"></script>
 </body>
 </html>
-
